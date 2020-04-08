@@ -4,6 +4,8 @@
 @push('styles')
 <link href="{{ asset('css/form.css')}}" rel="stylesheet">
 @endpush
+
+
 @section('title', 'update student information')
 
 @section('content')
@@ -23,17 +25,15 @@
         @method('PATCH')
         <div class="form-group">
             <label for="name"> Họ và Tên </label>
-            <input type="text" class="form-control name " name="hoten" placeholder="ex : Nguyễn Văn A"
-            value="{{ $student->name }}">
+            <input type="text" class="form-control name " name="hoten" placeholder="ex : Nguyễn Văn A" value="{{ $student->name }}">
         </div>
         <div class="form-group">
             <label for="mssv"> MSSV </label>
-            <input type="text" class="form-control mssv" name="mssv" placeholder="ex : 17520545 "
-            value="{{ $student->mssv }}">
+            <input type="text" class="form-control mssv" name="mssv" placeholder="ex : 17520545 " value="{{ $student->mssv }}">
         </div>
         <div class="form-group">
             <label for="tenkhoa"> Khoa </lßbel>
-                <select name="khoa" class="form-control khoa">
+                <select name="khoa" class="form-control khoa" id="khoa">
                     <option value="Khoa Khoa học máy tính">Khoa Khoa học máy tính</option>
                     <option value="Khoa Hệ thống thông tin">Khoa Hệ thống thông tin</option>
                     <option value="Khoa Công nghệ Phần mềm">Khoa Công nghệ Phần mềm</option>
@@ -44,11 +44,21 @@
         </div>
         <div class="form-group">
             <label for="nghenghiep"> Nghề nghiệp mong muốn </label>
-            <input type="text" class="form-control nghenghiep" name="nghenghiep" placeholder="ex : Software Enginering"
-            value="{{ $student->nghenghiep }}">
+            <input type="text" class="form-control nghenghiep" name="nghenghiep" placeholder="ex : Software Enginering" value="{{ $student->nghenghiep }}">
         </div>
         <button type="submit" class="btn btn-primary submit"> Cập Nhật </button>
     </form>
 </div>
+@endsection
 
+@section('script')
+<script>
+    $(document).ready(function() {
+        const khoaOldValue = '{{ $student->khoa}}';
+
+        if (khoaOldValue !== '') {
+            $('#khoa').val(khoaOldValue);
+        }
+    });
+</script>
 @endsection
