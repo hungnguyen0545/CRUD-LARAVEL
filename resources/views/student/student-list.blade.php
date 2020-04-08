@@ -35,7 +35,7 @@
                 <td scope="row"> {{ $student->mssv }}</td>
                 <td scope="row"> {{ $student->khoa }}</td>
                 <td scope="row"> {{ $student->nghenghiep }}</td>
-                <td>
+                <td class="btn-row">
                     <a href="{{ route('student.edit', $student) }}" class="btn btn-primary btn-edit">
                     <i class="fa fa-edit"></i> 
                     </a>

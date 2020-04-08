@@ -2,7 +2,9 @@
     height : 70px;
     margin-bottom: 5em;
 }
-
+.btn{
+    margin : 0px 5px;
+}
 .add-button-box{
     padding: 10px 30px;
     position: relative;
@@ -16,6 +18,10 @@
     position: absolute;
     right: 0;
     top: 0;
+}
+.btn-row{
+    display: flex;
+    justify-content: center;
 }
 
 
