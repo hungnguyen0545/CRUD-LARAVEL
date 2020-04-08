@@ -1,0 +1,34 @@
+*{
+    margin: 0;
+    padding : 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-size: 20px;
+    position : relative;
+}
+
+.flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box{
+    margin-top : 30px;
+    width: 50%;
+    height: auto;
+}
+h1{
+    margin-bottom : 50px;
+}
+input{
+    width: 90% !important;
+}
+.submit {
+    margin-top: 20px;
+    width: 120px;
+    height: 54px;
+    font-size: 20px;
+}
