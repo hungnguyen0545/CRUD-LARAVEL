@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::resource('student', 'StudentController');
-Route::get('/', 'StudentController@index');
+Route::get('/', 'StudentController@index')->middleware('auth');
 Route::get('/create','StudentController@create');
 Route::post('/create','StudentController@store');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
