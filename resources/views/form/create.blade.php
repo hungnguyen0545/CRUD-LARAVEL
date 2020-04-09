@@ -20,6 +20,7 @@
     <h1> Điền thông tin tại đây </h1>
     <form class="form-fill" action="{{ route('student.store') }}" method="POST">
         @csrf
+        @method('POST')
         <div class="form-group">
             <label for="name"> Họ và Tên </label>
             <input type="text" class="form-control name " name="hoten" placeholder="ex : Nguyễn Văn A"

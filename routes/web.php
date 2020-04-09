@@ -16,9 +16,8 @@ use Illuminate\Support\Facades\Auth;
 
 
 Route::resource('student', 'StudentController');
-Route::get('/', 'StudentController@index')->middleware('auth');
-Route::get('/create','StudentController@create');
-Route::post('/create','StudentController@store');
+Route::get('/', 'StudentController@index');
+
 
 Auth::routes();
 
