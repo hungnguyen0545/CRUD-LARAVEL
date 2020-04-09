@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 use Validator;
 class StudentController extends Controller
 {
+     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -37,8 +46,8 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'hoten' => 'required',
-            'mssv' => 'required',
+            'hoten' => 'required|string',
+            'mssv' => 'max:8|string|required|regex:(\d{2}52\d{4})',
             'khoa' => 'required',
             'nghenghiep' => 'required'
         ]);
@@ -60,9 +69,10 @@ class StudentController extends Controller
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show(Student $student)
+    public function show($id)
     {
-        //
+        $student = Student::find($id);
+        return view('form.show',compact('student'));
     }
 
     /**
@@ -87,8 +97,8 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'hoten' => 'required',
-            'mssv' => 'required',
+            'hoten' => 'required|string',
+            'mssv' => 'max:8|string|required|regex:(\d{2}52\d{4})',
             'khoa' => 'required',
             'nghenghiep' => 'required'
         ]);
