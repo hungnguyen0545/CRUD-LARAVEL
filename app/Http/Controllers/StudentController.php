@@ -22,19 +22,19 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = DB::table('student')
-            ->join('khoa', 'student.khoa', '=', 'khoa.makhoa')
-            ->select('student.*', 'khoa.tenkhoa')
+        $students = DB::table('sinhviens')
+            ->join('khoas', 'sinhviens.khoa_id', '=', 'khoas.id')
+            ->select('sinhviens.*', 'khoas.tenkhoa')
             ->paginate(5);
         return view('student.student-list', compact('students'));
     }
     public function chart()
     {
         $items = array();
-        $array = DB::table('student')
-                    ->rightJoin('khoa','khoa.makhoa' ,'=', 'student.khoa')
-                    ->selectRaw('khoa.makhoa,coalesce(count(student.id),0) as slsv')
-                    ->groupBy('khoa.makhoa')
+        $array = DB::table('sinhviens')
+                    ->rightJoin('khoas','sinhviens.khoa_id' ,'=', 'khoas.id')
+                    ->selectRaw('khoas.id,coalesce(count(sinhviens.id),0) as slsv')
+                    ->groupBy('khoas.id')
                     ->get();
         foreach($array as $key=>$value)
         {
@@ -69,9 +69,9 @@ class StudentController extends Controller
         ]);
         $student = new Student;
 
-        $student->name =  $request->get('hoten');
+        $student->hoten =  $request->get('hoten');
         $student->mssv = $request->get('mssv');
-        $student->khoa = $request->get('khoa');
+        $student->khoa_id = $request->get('khoa');
         $student->nghenghiep = $request->get('nghenghiep');
 
 
@@ -88,10 +88,10 @@ class StudentController extends Controller
     public function show($id)
     {
 
-        $student = DB::table('student')
-            ->join('khoa', 'student.khoa', '=', 'khoa.makhoa')
-            ->select('student.*', 'khoa.tenkhoa')
-            ->whereRaw('student.id = ?', $id)
+        $student = DB::table('sinhviens')
+            ->join('khoas', 'sinhviens.khoa_id', '=', 'khoas.id')
+            ->select('sinhviens.*', 'khoas.tenkhoa')
+            ->whereRaw('sinhviens.id = ?', $id)
             ->first();
         return view('form.show', compact('student'));
     }
@@ -104,10 +104,10 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        $student = DB::table('student')
-            ->join('khoa', 'student.khoa', '=', 'khoa.makhoa')
-            ->select('student.*', 'khoa.tenkhoa')
-            ->whereRaw('student.id = ?', $id)
+        $student = DB::table('sinhviens')
+            ->join('khoas', 'sinhviens.khoa_id', '=', 'khoas.id')
+            ->select('sinhviens.*')
+            ->whereRaw('sinhviens.id = ?', $id)
             ->first();
         return view('form.edit', compact('student'));
     }
@@ -129,9 +129,9 @@ class StudentController extends Controller
         ]);
 
         $student = Student::find($id);
-        $student->name =  $request->get('hoten');
+        $student->hoten =  $request->get('hoten');
         $student->mssv = $request->get('mssv');
-        $student->khoa = $request->get('khoa');
+        $student->khoa_id = $request->get('khoa');
         $student->nghenghiep = $request->get('nghenghiep');
         $student->save();
 

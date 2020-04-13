@@ -25,7 +25,7 @@
         @method('PATCH')
         <div class="form-group">
             <label for="name"> Họ và Tên </label>
-            <input type="text" class="form-control name " name="hoten" placeholder="ex : Nguyễn Văn A" value="{{ $student->name }}">
+            <input type="text" class="form-control name " name="hoten" placeholder="ex : Nguyễn Văn A" value="{{ $student->hoten }}">
         </div>
         <div class="form-group">
             <label for="mssv"> MSSV </label>
@@ -54,7 +54,7 @@
 @section('script')
 <script>
     $(document).ready(function() {
-        const khoaOldValue = '{{$student->khoa}}';
+        const khoaOldValue = '{{$student->khoa_id}}';
         if (khoaOldValue !== '') {
             $('#khoa').val(khoaOldValue);
         }

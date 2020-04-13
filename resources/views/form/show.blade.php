@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="card info-card">
-    <h3 class="card-header"> Họ và Tên : {{ $student->name }}</h3>
+    <h3 class="card-header"> Họ và Tên : {{ $student->hoten }}</h3>
     <div class="card-body">
         <p class="card-title"> Thông tin sinh viên : </p>
         <div class="card-text">

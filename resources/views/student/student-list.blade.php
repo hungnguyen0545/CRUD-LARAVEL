@@ -33,7 +33,7 @@
         <tbody>
             @foreach($students as $student)
             <tr>
-                <td scope="row"> {{ $student->name }}</td>
+                <td scope="row"> {{ $student->hoten }}</td>
                 <td scope="row"> {{ $student->mssv }}</td>
                 <td scope="row"> {{ $student->tenkhoa }}</td>
                 <td scope="row"> {{ $student->nghenghiep }}</td>
