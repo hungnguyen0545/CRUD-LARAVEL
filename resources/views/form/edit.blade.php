@@ -54,11 +54,9 @@
 @section('script')
 <script>
     $(document).ready(function() {
-        const khoaOldValue = '{{$student->tenkhoa}}';
-        khoaOldValue.replace(/\&amp;/g,'&')
-        console.log(khoaOldValue);
+        const khoaOldValue = '{{$student->khoa}}';
         if (khoaOldValue !== '') {
-            $('#khoa').text(khoaOldValue);
+            $('#khoa').val(khoaOldValue);
         }
     });
 </script>
