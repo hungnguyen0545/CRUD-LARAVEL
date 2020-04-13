@@ -20,7 +20,7 @@
     </div>
     @endif
     <h1> Fill your information </h1>
-    <form class="form-fill" action="{{ route('student.update',$student) }}" method="POST">
+    <form class="form-fill" action="{{ route('student.update',$student->id) }}" method="POST">
         @csrf
         @method('PATCH')
         <div class="form-group">
@@ -34,12 +34,12 @@
         <div class="form-group">
             <label for="tenkhoa"> Khoa </lßbel>
                 <select name="khoa" class="form-control khoa" id="khoa">
-                    <option value="Khoa Khoa học máy tính">Khoa Khoa học máy tính</option>
-                    <option value="Khoa Hệ thống thông tin">Khoa Hệ thống thông tin</option>
-                    <option value="Khoa Công nghệ Phần mềm">Khoa Công nghệ Phần mềm</option>
-                    <option value="Khoa Kỹ thuật Máy tính">Khoa Kỹ thuật Máy tính</option>
-                    <option value="Khoa MMT & Truyền thông">Khoa MMT & Truyền thông</option>
-                    <option value="Khoa Khoa học và Kỹ thuật Thông tin">Khoa Khoa học và Kỹ thuật Thông tin</option>
+                    <option value="1">Khoa Khoa học máy tính</option>
+                    <option value="2">Khoa Hệ thống thông tin</option>
+                    <option value="3">Khoa Công nghệ Phần mềm</option>
+                    <option value="4">Khoa Kỹ thuật Máy tính</option>
+                    <option value="5">Khoa MMT và Truyền thông</option>
+                    <option value="6">Khoa Khoa học và Kỹ thuật Thông tin</option>
                 </select>
         </div>
         <div class="form-group">
@@ -54,10 +54,11 @@
 @section('script')
 <script>
     $(document).ready(function() {
-        const khoaOldValue = '{{ $student->khoa}}';
-
+        const khoaOldValue = '{{$student->tenkhoa}}';
+        khoaOldValue.replace(/\&amp;/g,'&')
+        console.log(khoaOldValue);
         if (khoaOldValue !== '') {
-            $('#khoa').val(khoaOldValue);
+            $('#khoa').text(khoaOldValue);
         }
     });
 </script>

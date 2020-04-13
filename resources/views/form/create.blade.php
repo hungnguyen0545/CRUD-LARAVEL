@@ -1,10 +1,10 @@
 @extends('template')
 
-
+@section('title', 'fill student information')
 @push('styles')
 <link href="{{ asset('css/form.css')}}" rel="stylesheet">
 @endpush
-@section('title', 'fill student information')
+
 
 @section('content')
 <div class="box">
@@ -34,12 +34,12 @@
         <div class="form-group">
             <label for="tenkhoa"> Khoa </lßbel>
                 <select name="khoa" class="form-control khoa">
-                    <option value="Khoa Khoa học máy tính">Khoa Khoa học máy tính</option>
-                    <option value="Khoa Hệ thống thông tin">Khoa Hệ thống thông tin</option>
-                    <option value="Khoa Công nghệ Phần mềm">Khoa Công nghệ Phần mềm</option>
-                    <option value="Khoa Kỹ thuật Máy tính">Khoa Kỹ thuật Máy tính</option>
-                    <option value="Khoa MMT & Truyền thông">Khoa MMT & Truyền thông</option>
-                    <option value="Khoa Khoa học và Kỹ thuật Thông tin">Khoa Khoa học và Kỹ thuật Thông tin</option>
+                    <option value="1">Khoa Khoa học máy tính</option>
+                    <option value="2">Khoa Hệ thống thông tin</option>
+                    <option value="3">Khoa Công nghệ Phần mềm</option>
+                    <option value="4">Khoa Kỹ thuật Máy tính</option>
+                    <option value="5">Khoa MMT & Truyền thông</option>
+                    <option value="6">Khoa Khoa học và Kỹ thuật Thông tin</option>
                 </select>
         </div>
         <div class="form-group">

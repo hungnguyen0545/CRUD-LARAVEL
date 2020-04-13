@@ -15,7 +15,9 @@
 @endif
 <div class="add-button-box">
     <a href="{{ route('student.create') }}" class="btn btn-success btn-large btn-add">Add More</a>
+    <a href="{{ route('chart') }}" class="btn btn-success btn-large btn-show-graph">Show Graph</a>
 </div>
+
 <div class="student-table">
 
     <table class="table  table-striped table-bordered">
@@ -33,16 +35,16 @@
             <tr>
                 <td scope="row"> {{ $student->name }}</td>
                 <td scope="row"> {{ $student->mssv }}</td>
-                <td scope="row"> {{ $student->khoa }}</td>
+                <td scope="row"> {{ $student->tenkhoa }}</td>
                 <td scope="row"> {{ $student->nghenghiep }}</td>
                 <td class="btn-row">
-                    <a href="{{ route('student.show', $student) }}" class="btn btn-success btn-edit">
+                    <a href="{{ route('show', $student->id) }}" class="btn btn-success btn-edit">
                         <i class="fa fa-eye"></i>
                     </a>
-                    <a href="{{ route('student.edit', $student) }}" class="btn btn-primary btn-edit">
+                    <a href="{{ route('edit', $student->id) }}" class="btn btn-primary btn-edit">
                         <i class="fa fa-edit"></i>
                     </a>
-                    <form action="{{ route('student.destroy', $student) }}" method="POST" style='display: contents;'>
+                    <form action="{{ route('student.destroy', $student->id) }}" method="POST" style='display: contents;'>
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger btn-delete" type="submit">
@@ -54,5 +56,9 @@
             @endforeach
         </tbody>
     </table>
+    <div class="pagination ">
+    {{ $students->links() }}
+    </div>
+    
 </div>
 @endsection

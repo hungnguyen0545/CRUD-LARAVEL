@@ -15,9 +15,15 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-Route::resource('student', 'StudentController');
-Route::get('/', 'StudentController@index');
-
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('student', 'StudentController');
+    Route::get('/', 'StudentController@index');
+    Route::get('/graph' , 'StudentController@chart')->name('chart');
+    Route::get('/student/{student}','StudentController@show')->name('show');
+    Route::get('/student/{student}/edit', 'StudentController@edit')->name('edit');
+    
+    
+});
 
 Auth::routes();
 
