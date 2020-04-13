@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChangeDataTypeKhoaColumnOnStudentTable extends Migration
+class AddForeignKeyForSinhviensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class ChangeDataTypeKhoaColumnOnStudentTable extends Migration
      */
     public function up()
     {
-        Schema::table('student', function (Blueprint $table) {
-            $table->integer('khoa')->change();
+        Schema::table('sinhviens', function (Blueprint $table) {
+            $table->foreign('khoa_id')->references('id')->on('khoas');
         });
     }
 
@@ -25,8 +25,8 @@ class ChangeDataTypeKhoaColumnOnStudentTable extends Migration
      */
     public function down()
     {
-        Schema::table('student', function (Blueprint $table) {
-            $table->string('khoa')->change();
+        Schema::table('sinhviens', function (Blueprint $table) {
+            //
         });
     }
 }
