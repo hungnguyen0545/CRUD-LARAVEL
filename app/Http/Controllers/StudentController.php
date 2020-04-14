@@ -22,51 +22,25 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return view('student.student-list');
+        $students = Student::ShowStudent()->paginate(5);      
+        return view('student.student-list',compact('students'));
     }
-    function fetch(Request $request)
+    public function fetch(Request $request)
     {
-        if ($request->ajax()) {
-            $output = '';
-            $query = $request->get('query');
-            if ($query != '') {
+            $query = $request->get('search');
+            if ($query != '') 
+            {
                 $students = Student::ShowStudent()
                     ->WhereRaw("sinhviens.hoten like '%" .$query. "%'")
                     ->orWhereRaw("sinhviens.mssv like '%" .$query. "%'")
                     ->orWhereRaw("sinhviens.nghenghiep like '%" .$query. "%'")
                     ->orWhereRaw("khoas.tenkhoa like '%" .$query. "%'")
-                    ->get();
+                    ->paginate(5);
             } 
             else {
-                $students = Student::ShowStudent()->get();      
+                $students = Student::ShowStudent()->paginate(5);      
             }
-            if ($students) {
-                foreach ($students as $student) {
-                    $output .= '<tr>
-                    <td scope="row">' . $student->hoten . '</td>
-                    <td scope="row"> ' . $student->mssv . '</td>
-                    <td scope="row"> ' . $student->tenkhoa . '</td>
-                    <td scope="row"> ' . $student->nghenghiep . '</td>
-                    <td class="btn-row">
-                        <a href="' . route("show", $student->id) . '" class="btn btn-success btn-edit">
-                            <i class="fa fa-eye"></i>
-                        </a>
-                        <a href="' . route("edit", $student->id) . '" class="btn btn-primary btn-edit">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                        <form action="' . route("student.destroy", $student->id) . '" method="POST" style="display: contents;">
-                            <?php @csrf
-                            @method("DELETE")?>
-                            <button class="btn btn-danger btn-delete" type="submit">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>';
-                }
-        }
-    }
-                return $output;
+                return view('student.student-list',compact('students'));
     }
     public function chart()
     {
