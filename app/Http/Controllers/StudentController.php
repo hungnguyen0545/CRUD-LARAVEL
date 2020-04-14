@@ -22,22 +22,57 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = DB::table('sinhviens')
-            ->join('khoas', 'sinhviens.khoa_id', '=', 'khoas.id')
-            ->select('sinhviens.*', 'khoas.tenkhoa')
-            ->paginate(5);
-        return view('student.student-list', compact('students'));
+        return view('student.student-list');
+    }
+    function fetch(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = '';
+            $query = $request->get('query');
+            if ($query != '') {
+                $students = Student::ShowStudent()
+                    ->WhereRaw("sinhviens.hoten like '%" .$query. "%'")
+                    ->orWhereRaw("sinhviens.mssv like '%" .$query. "%'")
+                    ->orWhereRaw("sinhviens.nghenghiep like '%" .$query. "%'")
+                    ->orWhereRaw("khoas.tenkhoa like '%" .$query. "%'")
+                    ->get();
+            } 
+            else {
+                $students = Student::ShowStudent()->get();      
+            }
+            if ($students) {
+                foreach ($students as $student) {
+                    $output .= '<tr>
+                    <td scope="row">' . $student->hoten . '</td>
+                    <td scope="row"> ' . $student->mssv . '</td>
+                    <td scope="row"> ' . $student->tenkhoa . '</td>
+                    <td scope="row"> ' . $student->nghenghiep . '</td>
+                    <td class="btn-row">
+                        <a href="' . route("show", $student->id) . '" class="btn btn-success btn-edit">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                        <a href="' . route("edit", $student->id) . '" class="btn btn-primary btn-edit">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <form action="' . route("student.destroy", $student->id) . '" method="POST" style="display: contents;">
+                            <?php @csrf
+                            @method("DELETE")?>
+                            <button class="btn btn-danger btn-delete" type="submit">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>';
+                }
+        }
+    }
+                return $output;
     }
     public function chart()
     {
         $items = array();
-        $array = DB::table('sinhviens')
-                    ->rightJoin('khoas','sinhviens.khoa_id' ,'=', 'khoas.id')
-                    ->selectRaw('khoas.id,coalesce(count(sinhviens.id),0) as slsv')
-                    ->groupBy('khoas.id')
-                    ->get();
-        foreach($array as $key=>$value)
-        {
+        $array = Student::ShowChart();
+        foreach ($array as $key => $value) {
             array_push($items, $value->slsv);
         }
         //array_push($items, $array);
@@ -67,15 +102,14 @@ class StudentController extends Controller
             'khoa' => 'required',
             'nghenghiep' => 'required'
         ]);
+        
         $student = new Student;
-
         $student->hoten =  $request->get('hoten');
         $student->mssv = $request->get('mssv');
         $student->khoa_id = $request->get('khoa');
         $student->nghenghiep = $request->get('nghenghiep');
-
-
         $student->save();
+
         return redirect('/')->with('success', 'Đã thêm thành công !!!');
     }
 
@@ -88,11 +122,9 @@ class StudentController extends Controller
     public function show($id)
     {
 
-        $student = DB::table('sinhviens')
-            ->join('khoas', 'sinhviens.khoa_id', '=', 'khoas.id')
-            ->select('sinhviens.*', 'khoas.tenkhoa')
-            ->whereRaw('sinhviens.id = ?', $id)
-            ->first();
+        $student = Student::ShowStudent()
+                    ->whereRaw('sinhviens.id = ?', $id)
+                    ->first();
         return view('form.show', compact('student'));
     }
 
@@ -104,11 +136,9 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        $student = DB::table('sinhviens')
-            ->join('khoas', 'sinhviens.khoa_id', '=', 'khoas.id')
-            ->select('sinhviens.*')
-            ->whereRaw('sinhviens.id = ?', $id)
-            ->first();
+        $student = Student::ShowStudent()
+                    ->whereRaw('sinhviens.id = ?',$id)
+                    ->first();;
         return view('form.edit', compact('student'));
     }
 
