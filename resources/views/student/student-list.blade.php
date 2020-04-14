@@ -1,6 +1,7 @@
 @extends('template')
 
 @push('styles')
+
 <link href="{{ asset('/css/student-list.css') }}" rel="stylesheet" type="text/css">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 @endpush
@@ -14,6 +15,9 @@
 </div>
 @endif
 <div class="add-button-box">
+    <form class="form-inline my-2 my-lg-0 form-search">
+        <input class="form-control mr-sm-2 search-input" type="search" placeholder="Search ... " aria-label="Search" id='search'>
+    </form>
     <a href="{{ route('student.create') }}" class="btn btn-success btn-large btn-add">Add More</a>
     <a href="{{ route('chart') }}" class="btn btn-success btn-large btn-show-graph">Show Graph</a>
 </div>
@@ -30,35 +34,37 @@
                 <th scope="col"> </th>
             </tr>
         </thead>
-        <tbody>
-            @foreach($students as $student)
-            <tr>
-                <td scope="row"> {{ $student->hoten }}</td>
-                <td scope="row"> {{ $student->mssv }}</td>
-                <td scope="row"> {{ $student->tenkhoa }}</td>
-                <td scope="row"> {{ $student->nghenghiep }}</td>
-                <td class="btn-row">
-                    <a href="{{ route('show', $student->id) }}" class="btn btn-success btn-edit">
-                        <i class="fa fa-eye"></i>
-                    </a>
-                    <a href="{{ route('edit', $student->id) }}" class="btn btn-primary btn-edit">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <form action="{{ route('student.destroy', $student->id) }}" method="POST" style='display: contents;'>
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger btn-delete" type="submit">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
+        <tbody id='result'>
         </tbody>
     </table>
-    <div class="pagination ">
-    {{ $students->links() }}
-    </div>
-    
+
 </div>
 @endsection
+
+@section('script')
+<script>
+    $(document).ready(function()
+    {
+        load();
+        function load(query = '')
+        {
+            $.ajaxSetup({ headers: { 'csrftoken' : '{{csrf_token()}}' } });
+            $.ajax({
+                url : "{{ route('student.fetch') }}",
+                method : 'GET',
+                data : {query : query},
+                success : function(data)
+                {
+                    $('#result').html(data);
+                    
+                }
+            })
+        }
+        $('#search').on('keyup',function()
+        {
+            var query = $(this).val();
+            load(query);
+        })
+    })
+</script>
+@endsection 

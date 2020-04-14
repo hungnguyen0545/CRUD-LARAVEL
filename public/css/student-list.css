@@ -36,3 +36,12 @@
     justify-content: center;
 }
 
+.form-search{
+    height: 50px;
+    position: absolute;
+    top: 0;
+}
+.search-input{
+    width: 320px !important;
+    height: 100%;
+}

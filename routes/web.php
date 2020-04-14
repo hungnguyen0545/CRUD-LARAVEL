@@ -21,7 +21,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/graph' , 'StudentController@chart')->name('chart');
     Route::get('/student/{student}','StudentController@show')->name('show');
     Route::get('/student/{student}/edit', 'StudentController@edit')->name('edit');
-    
+    Route::get('/fetch' , 'StudentController@fetch')->name('student.fetch');
     
 });
 
