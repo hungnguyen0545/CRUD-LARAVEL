@@ -24,6 +24,7 @@ class StudentController extends Controller
     {
         return view('student.student-list');
     }
+
     function fetch(Request $request)
     {
         if ($request->ajax()) {
@@ -65,18 +66,24 @@ class StudentController extends Controller
                 </tr>';
                 }
         }
+        else {
+            $output .= '<tr>
+                            <td  scope="row"> No Data Found </td>
+                        </tr>';
+        }
     }
                 return $output;
     }
     public function chart()
     {
         $items = array();
+        $sum = Student::SumStudent();
         $array = Student::ShowChart();
         foreach ($array as $key => $value) {
             array_push($items, $value->slsv);
         }
         //array_push($items, $array);
-        return view('form.graph', compact('items'));
+        return view('form.graph', compact('items','sum'));
     }
     /**
      * Show the form for creating a new resource.
@@ -102,7 +109,7 @@ class StudentController extends Controller
             'khoa' => 'required',
             'nghenghiep' => 'required'
         ]);
-        
+
         $student = new Student;
         $student->hoten =  $request->get('hoten');
         $student->mssv = $request->get('mssv');

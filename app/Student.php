@@ -9,6 +9,12 @@ class Student extends Model
 {
     protected $table = 'sinhviens';
 
+    public function scopeSumStudent()
+    {
+        return DB::table('sinhviens')
+        ->selectRaw('count(*) as slsv')
+        ->get();
+    }
     public function scopeShowChart()
     {
         return DB::table('sinhviens')
@@ -17,7 +23,7 @@ class Student extends Model
         ->groupBy('khoas.id')
         ->get();
     }
-    
+
     public function scopeShowStudent()
     {
         return DB::table('sinhviens')
