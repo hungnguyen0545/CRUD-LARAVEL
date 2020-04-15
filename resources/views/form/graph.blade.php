@@ -9,11 +9,11 @@ flex-direction : column;
 justify-content : center;
 align-items : center;
 '>
+    <h2>Tổng số sinh viên trong danh sách : {{ $total }}</h2>
     <h2>Số lượng sinh viên của từng khoa : </h2>
     <div style='width : 900px !important ;'>
         <canvas id="barChart"></canvas>
     </div>
-
 </div>
 
 

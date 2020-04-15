@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Student;
+use App\sinhviens;
+use App\khoas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -22,7 +23,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::ShowStudent()->paginate(5);      
+        $students = sinhviens::ShowStudent()->paginate(5);      
         return view('student.student-list',compact('students'));
     }
     public function fetch(Request $request)
@@ -30,27 +31,28 @@ class StudentController extends Controller
             $query = $request->get('search');
             if ($query != '') 
             {
-                $students = Student::ShowStudent()
+                $students = sinhviens::ShowStudent()
                     ->WhereRaw("sinhviens.hoten like '%" .$query. "%'")
                     ->orWhereRaw("sinhviens.mssv like '%" .$query. "%'")
                     ->orWhereRaw("sinhviens.nghenghiep like '%" .$query. "%'")
-                    ->orWhereRaw("khoas.tenkhoa like '%" .$query. "%'")
+                   // ->orWhereRaw("khoas.tenkhoa like '%" .$query. "%'")
                     ->paginate(5);
             } 
             else {
-                $students = Student::ShowStudent()->paginate(5);      
+                $students = sinhviens::ShowStudent()->paginate(5);      
             }
                 return view('student.student-list',compact('students'));
     }
     public function chart()
     {
         $items = array();
-        $array = Student::ShowChart();
+        $array = sinhviens::ShowChart();
+        $total = sinhviens::CountStudent();
         foreach ($array as $key => $value) {
             array_push($items, $value->slsv);
         }
         //array_push($items, $array);
-        return view('form.graph', compact('items'));
+        return view('form.graph', compact('items','total'));
     }
     /**
      * Show the form for creating a new resource.
@@ -77,7 +79,7 @@ class StudentController extends Controller
             'nghenghiep' => 'required'
         ]);
         
-        $student = new Student;
+        $student = new sinhviens;
         $student->hoten =  $request->get('hoten');
         $student->mssv = $request->get('mssv');
         $student->khoa_id = $request->get('khoa');
@@ -90,13 +92,13 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Student  $student
+     * @param  \App\sinhviens  $student
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
 
-        $student = Student::ShowStudent()
+        $student = sinhviens::ShowStudent()
                     ->whereRaw('sinhviens.id = ?', $id)
                     ->first();
         return view('form.show', compact('student'));
@@ -105,12 +107,12 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Student  $student
+     * @param  \App\sinhviens  $student
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $student = Student::ShowStudent()
+        $student = sinhviens::ShowStudent()
                     ->whereRaw('sinhviens.id = ?',$id)
                     ->first();;
         return view('form.edit', compact('student'));
@@ -120,7 +122,7 @@ class StudentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Student  $student
+     * @param  \App\sinhviens  $student
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -132,7 +134,7 @@ class StudentController extends Controller
             'nghenghiep' => 'required'
         ]);
 
-        $student = Student::find($id);
+        $student = sinhviens::find($id);
         $student->hoten =  $request->get('hoten');
         $student->mssv = $request->get('mssv');
         $student->khoa_id = $request->get('khoa');
@@ -145,12 +147,12 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Student  $student
+     * @param  \App\sinhviens  $student
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $student = Student::find($id);
+        $student = sinhviens::find($id);
         $student->delete();
 
         return redirect('/')->with('success', 'Xoá thành công !');

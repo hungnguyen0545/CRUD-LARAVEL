@@ -42,7 +42,7 @@
             <tr>
                 <td scope="row"> {{ $student->hoten }}</td>
                 <td scope="row"> {{ $student->mssv }}</td>
-                <td scope="row"> {{ $student->tenkhoa }}</td>
+                <td scope="row"> {{ $student->khoas->tenkhoa }}</td>
                 <td scope="row"> {{ $student->nghenghiep }}</td>
                 <td class="btn-row">
                     <a href="{{ route('show', $student->id) }}" class="btn btn-success btn-edit">
