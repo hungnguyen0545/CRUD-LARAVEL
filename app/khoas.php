@@ -13,5 +13,4 @@ class khoas extends Model
     {
         return $this->hasMany('App\sinhviens','khoa_id');
     }
-    
 }
