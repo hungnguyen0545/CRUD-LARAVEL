@@ -18,7 +18,7 @@
     </div>
     @endif
     <h1> Điền thông tin tại đây </h1>
-    <form class="form-fill" action="{{ route('student.store') }}" method="POST">
+    <form class="form-fill" action="{{ route('students.store') }}" method="POST">
         @csrf
         @method('POST')
         <div class="form-group">
@@ -50,5 +50,4 @@
         <button type="submit" class="btn btn-primary submit"> Gửi </button>
     </form>
 </div>
-
 @endsection

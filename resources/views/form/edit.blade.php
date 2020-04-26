@@ -20,7 +20,7 @@
     </div>
     @endif
     <h1> Fill your information </h1>
-    <form class="form-fill" action="{{ route('student.update',$student->id) }}" method="POST">
+    <form class="form-fill" action="{{ route('students.update',$student->id) }}" method="POST">
         @csrf
         @method('PATCH')
         <div class="form-group">
@@ -41,23 +41,18 @@
                     <option value="5">Khoa MMT và Truyền thông</option>
                     <option value="6">Khoa Khoa học và Kỹ thuật Thông tin</option>
                 </select>
+                <input type="hidden" id="khoa_Id" value="{{ $student->khoa_id }}">
         </div>
         <div class="form-group">
             <label for="nghenghiep"> Nghề nghiệp mong muốn </label>
             <input type="text" class="form-control nghenghiep" name="nghenghiep" placeholder="ex : Software Enginering" value="{{ $student->nghenghiep }}">
         </div>
         <button type="submit" class="btn btn-primary submit"> Cập Nhật </button>
+        <a href = " {{ route('students.index')}}" class="btn btn-secondary btn-return"> Trở về </a>
     </form>
 </div>
 @endsection
 
 @section('script')
-<script>
-    $(document).ready(function() {
-        const khoaOldValue = '{{$student->khoa_id}}';
-        if (khoaOldValue !== '') {
-            $('#khoa').val(khoaOldValue);
-        }
-    });
-</script>
+<script src="{{ asset('js/edit.js') }}"></script>
 @endsection

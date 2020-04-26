@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 
-class khoas extends Model
+class Khoas extends Model
 {
     protected $table = "khoas";
 

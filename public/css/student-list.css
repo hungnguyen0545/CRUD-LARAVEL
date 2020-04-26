@@ -1,17 +1,20 @@
-.header{
-    height : 70px;
+.header {
+    height: 70px;
     margin-bottom: 4em;
 }
-.btn{
-    margin : 0px 5px;
+
+.btn {
+    margin: 0px 5px;
 }
-.add-button-box{
+
+.add-button-box {
     padding: 10px 30px;
     position: relative;
     height: 80px;
     display: block;
 }
-.btn-show-graph{
+
+.btn-show-graph {
     width: 160px;
     height: 50px;
     font-size: 23px;
@@ -19,7 +22,8 @@
     right: 16%;
     top: 0;
 }
-.btn-add{
+
+.btn-add {
     width: 150px;
     height: 50px;
     font-size: 23px;
@@ -27,24 +31,47 @@
     right: 4%;
     top: 0;
 }
-.btn-row{
-    display: flex;
-    justify-content: center;
-}
-.pagination{
+
+.btn-row {
     display: flex;
     justify-content: center;
 }
 
-.form-search{
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.form-search {
     height: 50px;
     position: absolute;
     top: 0;
 }
-.search-input{
+
+.search-input {
     width: 320px !important;
     height: 100%;
 }
-.btn-search{
+
+.btn-search {
     height: 100%;
+}
+
+.count-fetch {
+    width: 30%;
+    height: 50px;
+    position: absolute;
+    right: 37%;
+    top: 0;
+    display: flex;
+    align-items: center;
+}
+
+.count-fetch p {
+    margin: 0 !important;
+    font-size: 1.5rem;
+}
+
+.btn-star {
+    color: blue;
 }

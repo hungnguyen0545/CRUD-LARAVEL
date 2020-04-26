@@ -15,7 +15,7 @@
         <p class="card-title"> Thông tin sinh viên : </p>
         <div class="card-text">
             <p> mssv : {{ $student->mssv}}</p>
-            <p> Khoa : {{ $student->tenkhoa}}</p>
+            <p> Khoa : {{ $student->khoas->tenkhoa}}</p>
             <p> Nghề nghiệp mong muốn : {{ $student->nghenghiep}}</p>
         </div>
     </div>
