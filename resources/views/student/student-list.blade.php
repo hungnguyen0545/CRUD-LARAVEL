@@ -16,12 +16,16 @@
 @endif
 <div class="add-button-box">
     <form class="form-inline my-2 my-lg-0 form-search" method="GET" action="{{ route('student.fetch') }}">
-        @csrf
-        @method('GET')
-        <input class="form-control mr-sm-2 search-input" type="search" placeholder="Search ... " aria-label="Search" id='search' name='search'>
+        <input class="form-control mr-sm-2 search-input" type="search" placeholder="Search Name or MSSV ... " aria-label="Search" id='search' name='search'
+        value= "{{ $query ?? '' }}" >
         <button class="btn btn-outline-success my-2 my-sm-0 btn-search" type="submit">Search</button>
     </form>
-    <a href="{{ route('student.create') }}" class="btn btn-success btn-large btn-add">Add More</a>
+    <div class="count-fetch">
+        @if(isset($countFetch))
+        <input type="hidden" class="countfetch" value="@json($countFetch)">
+        @endif
+    </div>
+    <a href="{{ route('students.create') }}" class="btn btn-success btn-large btn-add">Add More</a>
     <a href="{{ route('chart') }}" class="btn btn-success btn-large btn-show-graph">Show Graph</a>
 </div>
 
@@ -51,13 +55,23 @@
                     <a href="{{ route('edit', $student->id) }}" class="btn btn-primary btn-edit">
                         <i class="fa fa-edit"></i>
                     </a>
-                    <form action="{{ route('student.destroy', $student->id) }}" method="POST" style='display: contents;'>
+                    <form action="{{ route('students.destroy', $student->id) }}" method="POST" style='display: contents;'>
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger btn-delete" type="submit">
                             <i class="fa fa-trash"></i>
                         </button>
-                    </form>
+                    </form> 
+                    
+                    <a href="{{ route('check', $student->id) }}" class="btn btn-star" value = '{{ $student->id }}'>
+                    @isset(session()->get('check')->items[$student->id])
+                    <i class="fa fa-star" style="color : red"></i>                      
+                    @endisset
+                    @empty(session()->get('check')->items[$student->id])
+                    <i class="fa fa-star" style="color : blue "></i>    
+                    @endempty
+                    </a>
+
                 </td>
             </tr>
             @endforeach
@@ -65,7 +79,10 @@
         </tbody>
     </table>
     <div class="pagination ">
-        {{ $students->links() }}
+        {{ $students->appends(Request::except('page'))->links() }}
     </div>
 </div>
+@endsection
+@section('script')
+<script src="{{ asset('js/search.js')}}"></script>
 @endsection
