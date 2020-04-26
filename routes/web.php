@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,15 +16,23 @@ use Illuminate\Support\Facades\Auth;
 
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::resource('student', 'StudentController');
+    Route::resource('students', 'StudentController');
     Route::get('/', 'StudentController@index');
     Route::get('/graph' , 'StudentController@chart')->name('chart');
-    Route::get('/student/{student}','StudentController@show')->name('show');
-    Route::get('/student/{student}/edit', 'StudentController@edit')->name('edit');
+    Route::get('/students/{student}','StudentController@show')->name('show');
+    Route::get('/students/{student}/edit', 'StudentController@edit')->name('edit');
     Route::get('/fetch' , 'StudentController@fetch')->name('student.fetch');
-    
+    Route::get('/students/check/{id}' , 'StudentController@checkStar')->name('check');
+    Route::get('/session' ,function(Request $request)
+    {
+         $checkArray = ($request->session()->get('check'));
+         return $checkArray->items;
+         //$checkArray->items[8]['item']->id;
+        //return $request->session()->forget('check');  
+    });
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/oop' , 'StudentController@oop');
