@@ -32,12 +32,12 @@
 <div class="student-table">
 
     <table class="table  table-striped table-bordered">
-        <thead>
+        <thead> 
             <tr>
                 <th scope="col">Họ và Tên</th>
                 <th scope="col">MSSV</th>
                 <th scope="col">Khoa</th>
-                <th scope="col">Nghệ nghiệp mong muốn</th>
+                <th scope="col">Nghề nghiệp mong muốn</th>
                 <th scope="col"> </th>
             </tr>
         </thead>
