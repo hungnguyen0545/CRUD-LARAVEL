@@ -44,7 +44,11 @@ class Sinhviens extends Model
 
     public function scopeCountFetch($query,$agr)
     {
-        return $this->Fetch($agr)->count();
+        return $this->ShowStudent()
+        ->WhereRaw("sinhviens.hoten like '%" . $agr . "%'")
+        ->orWhereRaw("sinhviens.mssv like '%" . $agr . "%'")
+        ->orWhereRaw("sinhviens.nghenghiep like '%" . $agr . "%'")
+        ->count();
     }
 
     public function scopeCheckMssv($query,$mssv) {
@@ -55,7 +59,7 @@ class Sinhviens extends Model
     {
         return Sinhviens::select("id")->find($id);
     }
-    
+
     public function scopeTest()
     {
         return Sinhviens::get();
