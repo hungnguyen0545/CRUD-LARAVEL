@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\SameMssv;
-use App\Sinhviens;
 
 class StoreStudentInfo extends FormRequest
 {
@@ -17,7 +16,6 @@ class StoreStudentInfo extends FormRequest
     {
         return true;
     }
-
     /**
      * Get the validation rules that apply to the request.
      *

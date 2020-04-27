@@ -67,14 +67,13 @@ class StudentController extends Controller
         if($hasChecked == 'false')
         {
             $student->check = 0;
-            $student->save();
         }
        
-        if ($hasChecked == 'true')
+        else if ($hasChecked == 'true')
         {
-            $student->check = 1;
-            $student->save();
+            $student->check = 1; 
         }
+        $student->save();
     }
 
     /**
