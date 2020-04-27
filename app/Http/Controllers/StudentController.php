@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Sinhviens;
-use App\Checkstar;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreStudentInfo;
-
 
 class StudentController extends Controller
 {
@@ -63,16 +61,20 @@ class StudentController extends Controller
      * @param id of student 
      * @return \Illuminate\Http\Response
      */
-    public function checkStar(Request $request,$id)
+    public function checkStar($id,$hasChecked)
     {
-         $student_has_choosed = Sinhviens::CheckStar($id);
-         $oldStudent = $request->session()->has('check') ? $request->session()->get('check') : null;
+        $student = Sinhviens::find($id);
+        if($hasChecked == 'false')
+        {
+            $student->check = 0;
+            $student->save();
+        }
        
-         $check = new Checkstar($oldStudent);
-         $check->add($student_has_choosed->id,$student_has_choosed);
-
-         $request->session()->put('check',$check);
-        return redirect('/')->with('success', 'Đã check thành công !!!');    
+        if ($hasChecked == 'true')
+        {
+            $student->check = 1;
+            $student->save();
+        }
     }
 
     /**
@@ -142,7 +144,6 @@ class StudentController extends Controller
      */
     public function update(StoreStudentInfo $request, $id)
     {
-
         $student = Sinhviens::find($id);
         $student->hoten =  $request->get('hoten');
         $student->mssv = $request->get('mssv');

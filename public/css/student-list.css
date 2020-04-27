@@ -75,3 +75,15 @@
 .btn-star {
     color: blue;
 }
+
+.checkbox-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+}
+
+.checkbox-box .form-check-input {
+    margin: 0;
+    cursor: pointer;
+}

@@ -22,7 +22,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/students/{student}','StudentController@show')->name('show');
     Route::get('/students/{student}/edit', 'StudentController@edit')->name('edit');
     Route::get('/fetch' , 'StudentController@fetch')->name('student.fetch');
-    Route::get('/students/check/{id}' , 'StudentController@checkStar')->name('check');
+    Route::get('/students/check/{id}/{hasChecked}' , 'StudentController@checkStar')->name('check');
     Route::get('/session' ,function(Request $request)
     {
          $checkArray = ($request->session()->get('check'));

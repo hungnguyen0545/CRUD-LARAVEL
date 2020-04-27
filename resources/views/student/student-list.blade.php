@@ -63,15 +63,14 @@
                         </button>
                     </form> 
                     
-                    <a href="{{ route('check', $student->id) }}" class="btn btn-star" value = '{{ $student->id }}'>
-                    @isset(session()->get('check')->items[$student->id])
-                    <i class="fa fa-star" style="color : red"></i>                      
-                    @endisset
-                    @empty(session()->get('check')->items[$student->id])
-                    <i class="fa fa-star" style="color : blue "></i>    
-                    @endempty
-                    </a>
-
+                    <div class="checkbox-box">
+                        @if($student->check == 1)
+                        <input class="form-check-input" type="checkbox" value="{{ $student->id }}"
+                        checked>
+                        @elseif ($student->check == 0)
+                        <input class="form-check-input" type="checkbox" value="{{ $student->id }}" >
+                        @endif    
+                    </div>
                 </td>
             </tr>
             @endforeach
@@ -85,4 +84,5 @@
 @endsection
 @section('script')
 <script src="{{ asset('js/search.js')}}"></script>
+<script src="{{ asset('js/check.js')}}"></script>
 @endsection
