@@ -10,7 +10,6 @@ class Sinhviens extends Model
 {
     protected $table = 'sinhviens';
     protected $primaryKey='id';
-    const const_value = "Nothi" ;
 
     public function khoas()
     {
@@ -33,6 +32,7 @@ class Sinhviens extends Model
     {
         return $this->count();
     }
+
     public function scopeFetch($query,$agr)
     {
         return  $this->ShowStudent()
@@ -41,17 +41,21 @@ class Sinhviens extends Model
                 ->orWhereRaw("sinhviens.nghenghiep like '%" . $agr . "%'")
                 ->paginate(5);
     }
+
     public function scopeCountFetch($query,$agr)
     {
         return $this->Fetch($agr)->count();
     }
+
     public function scopeCheckMssv($query,$mssv) {
         return Sinhviens::WhereRaw("mssv like '%".$mssv."%'")->count(); 
     }
+    
     public function scopeCheckStar($query , $id)
     {
         return Sinhviens::select("id")->find($id);
     }
+    
     public function scopeTest()
     {
         return Sinhviens::get();

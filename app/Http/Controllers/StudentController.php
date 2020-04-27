@@ -21,6 +21,13 @@ class StudentController extends Controller
         return view('student.student-list', compact('students'));
     }
 
+
+     /**
+     * Show research want to search .
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function fetch(Request $request)
     {
         $query = $request->get('search');
@@ -33,6 +40,11 @@ class StudentController extends Controller
         return view('student.student-list', compact('students', 'query', 'countFetch'));
     }
 
+     /**
+     * Display a chart which show number of student each khoa.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function chart()
     {
         $items = array();
@@ -44,6 +56,13 @@ class StudentController extends Controller
         return view('form.graph', compact('items', 'total'));
     }
 
+    /**
+     * Show research want to search .
+     * 
+     * @param  \Illuminate\Http\Request  $request 
+     * @param id of student 
+     * @return \Illuminate\Http\Response
+     */
     public function checkStar(Request $request,$id)
     {
          $student_has_choosed = Sinhviens::CheckStar($id);
