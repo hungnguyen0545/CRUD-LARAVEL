@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\SameMssv;
+use App\Sinhviens;
 
 class StoreStudentInfo extends FormRequest
 {
@@ -24,11 +25,26 @@ class StoreStudentInfo extends FormRequest
      */
     public function rules()
     {
-        return [
-            'hoten' => 'required|string',
-            'mssv' => ['max:8','string','required','regex:(\d{2}52\d{4})', new SameMssv],
-            'khoa' => 'required',
-            'nghenghiep' => 'required'
-        ];
+       switch($this->method())
+       {
+           case 'POST' : 
+            {
+                return [
+                    'hoten' => 'required|string',
+                    'mssv' => ['max:8','string','required','regex:(\d{2}52\d{4})', new SameMssv],
+                    'khoa' => 'required',
+                    'nghenghiep' => 'required'
+                ];
+            }
+            case 'PATCH' : {
+                return [
+                    'hoten' => 'required|string',
+                    'mssv' => ['max:8','string','required','regex:(\d{2}52\d{4})'],
+                    'khoa' => 'required',
+                    'nghenghiep' => 'required'
+                ];
+            }
+            default : break;
+       }
     }
 }
