@@ -67,15 +67,20 @@ document.addEventListener('DOMContentLoaded', function() {
         },
 
         eventResize: function(element) {
+            console.log(element);
             let start = moment(element.event.start).format('YYYY-MM-DD HH:mm:ss');
             let end = moment(element.event.end).format('YYYY-MM-DD HH:mm:ss');
+            let title = element.event.title;
+            let color = element.event.backgroundColor;
+
             let newEvent = {
                 _method: 'PUT',
                 id: element.event.id,
+                title: title,
                 start: start,
-                end: end
+                end: end,
+                color: color
             }
-
             sendEvent(routeEvents('routeUpdateEvents'), newEvent);
         },
         select: function(element) {
