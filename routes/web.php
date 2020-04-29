@@ -23,9 +23,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/students/{student}/edit', 'StudentController@edit')->name('edit');
     Route::get('/fetch' , 'StudentController@fetch')->name('student.fetch');
     Route::get('/students/check/{id}/{hasChecked}' , 'StudentController@checkStar')->name('check');
+
+    Route::get('/fullcalendar','FullCalendarController@index')->name('calendar');
+    Route::get('/load-events','EventController@loadEvents')->name('routeLoadEvents');
+    Route::put('/update-events','EventController@UpdateEvents')->name('routeUpdateEvents');
+    Route::post('/store-events','EventController@StoreEvents')->name('routeStoreEvents');
+    Route::delete('/delete-events','EventController@DeleteEvents')->name('routeDeleteEvents');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/oop' , 'StudentController@oop');

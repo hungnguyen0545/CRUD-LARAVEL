@@ -34,7 +34,8 @@ class StoreStudentInfo extends FormRequest
                     'nghenghiep' => 'required'
                 ];
             }
-            case 'PATCH' : {
+            case 'PATCH' :
+            {    
                 return [
                     'hoten' => 'required|string',
                     'mssv' => ['max:8','string','required','regex:(\d{2}52\d{4})'],
