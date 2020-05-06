@@ -15,7 +15,6 @@
         <input type='hidden' id='array' value="@json($items)">
     </div>
 </div>
-
 @endsection
 
 @section('script')

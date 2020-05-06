@@ -1,4 +1,18 @@
 @extends('layouts.app')
+@section('style')
+<style>
+.alert-changepwd{
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 800;
+    color: cadetblue;
+    border: 3px solid rgba(0,0,0,0.5);
+    margin: 11px 342px;
+    box-shadow: 6px 5px rgba(0,0,0,0.1);
+}
+</style>
+@endsection
 @section('content')
 @if(session()->get('alert'))
 <div class="alert alert-changepwd">
@@ -17,7 +31,6 @@
                          @foreach ($errors->all() as $error)
                             <p class="text-danger">{{ $error }}</p>
                          @endforeach 
-  
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">Current Password</label>
   
@@ -55,4 +68,7 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script src="{{ asset('js/check.js')}}"></script>
 @endsection

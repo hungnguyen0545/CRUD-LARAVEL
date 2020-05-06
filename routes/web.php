@@ -38,8 +38,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
-// Route::get('a',function(Request $request)
-// {
-//     $request->session()->forget('must_change_pwd');
-// });
+Route::get('a',function(Request $request)
+{
+    $request->session()->forget('must_change_pwd');
+});
 
