@@ -15,14 +15,14 @@ use Illuminate\Http\Request;
 */
 
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth', 'changepwd']], function () {
     Route::resource('students', 'StudentController');
     Route::get('/', 'StudentController@index');
-    Route::get('/graph' , 'StudentController@chart')->name('chart');
+    Route::get('/graph', 'StudentController@chart')->name('chart');
     Route::get('/students/{student}','StudentController@show')->name('show');
     Route::get('/students/{student}/edit', 'StudentController@edit')->name('edit');
     Route::get('/fetch' , 'StudentController@fetch')->name('student.fetch');
-    Route::get('/students/check/{id}/{hasChecked}' , 'StudentController@checkStar')->name('check');
+    Route::post('/students/check' , 'StudentController@checkStar')->name('check');
 
     Route::get('/fullcalendar','FullCalendarController@index')->name('calendar');
     Route::get('/load-events','EventController@loadEvents')->name('routeLoadEvents');
@@ -31,6 +31,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/delete-events','EventController@DeleteEvents')->name('routeDeleteEvents');
 });
 
-Auth::routes();
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('edit-password', 'ChangePasswordController@index')->name('edit.password');
+    Route::post('change-password', 'ChangePasswordController@store')->name('change.password');
+});
 
+Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('a',function(Request $request)
+// {
+//     $request->session()->forget('must_change_pwd');
+// });
+

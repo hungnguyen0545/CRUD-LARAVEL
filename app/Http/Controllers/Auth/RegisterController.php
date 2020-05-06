@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
+use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Events\Registered;
+use Exception;
 
 class RegisterController extends Controller
 {
@@ -41,6 +43,23 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    //create a new method that overrides default register 
+    public function register(Request $request)
+    {
+        try{
+            $validator = $this->validator($request->all());// check validator
+            if ($validator->fails()) {
+                return redirect('/register')
+                ->withErrors($validator);
+            }
+            event(new Registered($newuser = $this->create($request->all())));// create new user
+            return redirect()->route('login'); // Change the Redirect Path
+        }
+        catch(Exception $e)
+        {
+            return $e->getMessage();
+        }
+    }
     /**
      * Get a validator for an incoming registration request.
      *
