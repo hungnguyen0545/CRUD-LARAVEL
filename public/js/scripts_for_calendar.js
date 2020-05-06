@@ -57,8 +57,14 @@ function sendEvent(route, data_) {
         data: data_,
         dataType: 'json',
         success: function(json) {
-            if (json)
+            if (json) {
+                alert('Do Successfully !!! ');
                 location.reload();
+            }
+        },
+        error: function(error) {
+            alert('Get Some Mistake');
+            console.log(error);
         }
     })
 }

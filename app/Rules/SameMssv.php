@@ -3,7 +3,7 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use App\Sinhviens;
+use App\Students;
 
 class SameMssv implements Rule
 {
@@ -26,7 +26,7 @@ class SameMssv implements Rule
      */
     public function passes($attribute, $value)
     {
-        $checkMssv = Sinhviens::CheckMssv($value);
+        $checkMssv = Students::CheckMssv($value);
         if($checkMssv != 0)
         return false;
         else 

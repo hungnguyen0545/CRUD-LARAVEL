@@ -1,4 +1,4 @@
-@extends('template')
+@extends('main_template')
 
 @push('styles')
 <link href="{{ asset('asset/fullcalendar/packages/core/main.css')}}" rel='stylesheet' />

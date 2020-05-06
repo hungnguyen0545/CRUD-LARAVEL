@@ -25,7 +25,6 @@ class Checkstar
        }
        $this->items[$id] = $storedItem;
     }
-
 }   
 ?>
 
