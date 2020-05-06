@@ -3,50 +3,56 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Events;
-
+use App\Libs\Services\EventServices;
+use Exception;
 
 class EventController extends Controller
 {
     public function loadEvents()
     {
-        $events = Events::all();
-        return response()->json($events);
+        try{
+            $events = EventServices::ShowEntiredEvent();
+            return response()->json($events);
+        }
+        catch(Exception $e)
+        {
+            return $e->getMessage();
+        }
     }
 
     public function StoreEvents(Request $request)
     {
-        $event = new Events();
-        $event->title = $request->title;
-        $event->start = $request->start;
-        $event->end   = $request->end;
-        $event->color = $request->color;
-        $event->description = $request->description;
-
-        $event->save();
-
-        return response()->json(true);
+        try{
+            EventServices::CreatedNewEvent($request);
+            return response()->json(true);
+        }
+        catch(Exception $e)
+        {
+            return $e->getMessage();
+        }
     }
     
     public function UpdateEvents(Request $request)
     {
-        $event = Events::find($request->id);
-        $event->title = $request->title;
-        $event->start = $request->start;
-        $event->end = $request->end;
-        $event->color = $request->color;
-        $event->description = $request->description;
-        $event->save();
-
-        return response()->json(true);
+        try{
+            EventServices::UpdatedEvent($request);
+            return response()->json(true);
+        }
+        catch(Exception $e)
+        {
+            return $e->getMessage();
+        }
     }
 
     public function DeleteEvents(Request $request)
     {
-        $event = Events::find($request->id);
-        $event->delete();
-        return response()->json(true);
+        try{
+            EventServices::DeletedEvent($request);
+            return response()->json(true);
+        }
+        catch(Exception $e)
+        {
+            return $e->getMessage();
+        }
     }
-
-   
 }

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Sinhviens;
+use App\Libs\Services\StudentServices;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreStudentInfo;
+use Exception;
 
 class StudentController extends Controller
 {
@@ -15,10 +16,16 @@ class StudentController extends Controller
      */
     public function index() 
     {
-        $students = Sinhviens::ShowStudent()->paginate(5);
-        return view('student.student-list', compact('students'));
+        try{
+            $students = StudentServices::ShowEntireStudent();
+            return view('student.student-list', compact('students'));
+        }
+        catch(Exception $e)
+        {
+            return $e->getMessage();
+        }
+        
     }
-
 
      /**
      * Show research want to search .
@@ -28,14 +35,16 @@ class StudentController extends Controller
      */
     public function fetch(Request $request)
     {
-        $query = $request->get('search');
-        if ($query != '') {
-            $students = Sinhviens::Fetch($query);
-        } else {
-            $students = Sinhviens::ShowStudent()->paginate(5);
+        try{
+            $query      = $request->get('search');
+            $students   = StudentServices::Fetch($query);
+            $countFetch = StudentServices::CountFetch(($query));
+            return view('student.student-list', compact('students', 'query', 'countFetch'));
         }
-        $countFetch = Sinhviens::CountFetch($query);
-        return view('student.student-list', compact('students', 'query', 'countFetch'));
+        catch(Exception $e)
+        {
+            return $e->getMessage();
+        }
     }
 
      /**
@@ -45,13 +54,15 @@ class StudentController extends Controller
      */
     public function chart()
     {
-        $items = array();
-        $array = Sinhviens::ShowChart();
-        $total = Sinhviens::count();
-        foreach ($array as $key => $value) {
-            array_push($items, $value->slsv);
+        try{
+            $total = StudentServices::CountTotalStudent();
+            $items = StudentServices::ShowChart();
+            return view('student.graph', compact('items', 'total'));
         }
-        return view('form.graph', compact('items', 'total'));
+        catch(Exception $e)
+        {
+            return $e->getMessage();
+        }   
     }
 
     /**
@@ -61,19 +72,18 @@ class StudentController extends Controller
      * @param id of student 
      * @return \Illuminate\Http\Response
      */
-    public function checkStar($id,$hasChecked)
+    public function checkStar(Request $request)
     {
-        $student = Sinhviens::find($id);
-        if($hasChecked == 'false')
-        {
-            $student->check = 0;
+        try{
+            $id = $request->id;
+            $hasChecked = $request->hasChecked;
+            StudentServices::ChangedCheckedStatusOfStudent($id,$hasChecked);
+            return response()->json(array('mess' => 'success'));
         }
-       
-        else if ($hasChecked == 'true')
+        catch(Exception $e)
         {
-            $student->check = 1; 
+            $e->getMessage();
         }
-        $student->save();
     }
 
     /**
@@ -83,7 +93,7 @@ class StudentController extends Controller
      */
     public function create()    
     {
-        return view('form.create'); 
+        return view('student.create'); 
     }
 
     /**
@@ -94,15 +104,14 @@ class StudentController extends Controller
      */
     public function store(StoreStudentInfo $request)
     {
-
-        $student = new sinhviens;
-        $student->hoten =  $request->get('hoten');
-        $student->mssv = $request->get('mssv');
-        $student->khoa_id = $request->get('khoa');
-        $student->nghenghiep = $request->get('nghenghiep');
-        $student->save();
-
-        return redirect('/')->with('success', 'Đã thêm thành công !!!');
+        try{
+            StudentServices::CreateNewStudent($request);
+            return redirect('/')->with('success', 'Đã thêm thành công !!!');
+        }
+        catch(Exception $e)
+        {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -113,11 +122,15 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        $student = Sinhviens::ShowStudent()
-            ->whereRaw('sinhviens.id = ?', $id)
-            ->first();
-
-        return view('form.show', compact('student'));
+        try
+        {
+            $student = StudentServices::ShowEachStudent($id);
+            return view('student.show', compact('student'));
+        }
+        catch(Exception $e)
+        {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -128,10 +141,15 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        $student = Sinhviens::ShowStudent()
-            ->whereRaw('sinhviens.id = ?', $id)
-            ->first();;
-        return view('form.edit', compact('student'));
+        try{
+            $student = StudentServices::ShowEachStudent($id);
+            return view('student.edit', compact('student'));
+        }
+        catch(Exception $e)
+        {
+            return $e->getMessage();
+        }
+        
     }
 
     /**
@@ -143,16 +161,16 @@ class StudentController extends Controller
      */
     public function update(StoreStudentInfo $request, $id)
     {
-        $student = Sinhviens::find($id);
-        $student->hoten =  $request->get('hoten');
-        $student->mssv = $request->get('mssv');
-        $student->khoa_id = $request->get('khoa');
-        $student->nghenghiep = $request->get('nghenghiep');
-        $student->save();
-
-        return redirect('/')->with('success', 'Đã cập nhật thành công!!!');
+        try{
+            StudentServices::UpdatedStudent($request, $id);
+            return redirect('/')->with('success', 'Đã cập nhật thành công!!!');
+        }
+        catch(Exception $e)
+        {
+            return $e->getMessage();
+        }
+        
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -161,9 +179,13 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        $student = Sinhviens::find($id);
-        $student->delete();
-        return redirect('/')->with('success', 'Xoá thành công !');
+        try{
+            StudentServices::DeletedStudent($id);
+            return redirect('/')->with('success', 'Xoá thành công !');
+        }
+        catch(Exception $e)
+        {
+            return $e->getMessage();
+        }
     }
-
 }
