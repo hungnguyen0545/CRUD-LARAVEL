@@ -8,51 +8,51 @@ use Exception;
 
 class EventController extends Controller
 {
-    public function loadEvents()
+    public function load()
     {
         try{
-            $events = EventServices::ShowEntiredEvent();
+            $events = EventServices::showAllEvent();
             return response()->json($events);
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
 
-    public function StoreEvents(Request $request)
+    public function store(Request $request)
     {
         try{
-            EventServices::CreatedNewEvent($request);
+            EventServices::createNewEvent($request);
             return response()->json(true);
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
     
-    public function UpdateEvents(Request $request)
+    public function update(Request $request)
     {
         try{
-            EventServices::UpdatedEvent($request);
+            EventServices::updateEvent($request);
             return response()->json(true);
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
 
-    public function DeleteEvents(Request $request)
+    public function delete(Request $request)
     {
         try{
-            EventServices::DeletedEvent($request);
+            EventServices::deleteEvent($request);
             return response()->json(true);
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
 }

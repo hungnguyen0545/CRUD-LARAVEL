@@ -8,13 +8,13 @@ class PasswordHistory extends Model
 {
     protected $table = 'passwordHistory';
 
-    public function scopeCheckUserLoginFirstTime($query, $uid)
+    public function scopecheckUserLoginFirstTime($query, $uid)
     {       
            return PasswordHistory::where('user_id',$uid)
                                 ->get()
                                 ->count();
     }
-    public function scopeCheckTheLatestChangedPassword($query, $uid)
+    public function scopecheckTheLatestChangedPassword($query, $uid)
     {
         return  PasswordHistory::where('user_id',$uid)
                                 ->select('created_at')

@@ -27,12 +27,12 @@ class LoginController extends Controller
     {
         try{
             $uid = $user->id;
-            if(PasswordHistory::CheckUserLoginFirstTime($uid) === 0)
+            if(PasswordHistory::checkUserLoginFirstTime($uid) === 0)
             {
                 $request->session()->put('must_change_pwd', true);
                 return redirect('/edit-password')->with('alert', 'you need to change password at the first time login !');
             }
-            else if( ChangedPasswordServices::CheckTime($uid) > 7)
+            else if( ChangedPasswordServices::checkTime($uid) > 7)
             {
                 $request->session()->put('must_change_pwd', true);
                 return redirect('/edit-password')->with('alert', 'you need to change password after a week when you not login !');
@@ -41,7 +41,7 @@ class LoginController extends Controller
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
      }
     /**

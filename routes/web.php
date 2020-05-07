@@ -18,17 +18,17 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => ['auth', 'changepwd']], function () {
     Route::resource('students', 'StudentController');
     Route::get('/', 'StudentController@index');
-    Route::get('/graph', 'StudentController@chart')->name('chart');
-    Route::get('/students/{student}','StudentController@show')->name('show');
-    Route::get('/students/{student}/edit', 'StudentController@edit')->name('edit');
-    Route::get('/fetch' , 'StudentController@fetch')->name('student.fetch');
-    Route::post('/students/check' , 'StudentController@checkStar')->name('check');
+    Route::get('/graph', 'StudentController@chart')->name('students.chart');
+    Route::get('/students/{student}','StudentController@show')->name('students.show');
+    Route::get('/students/{student}/edit', 'StudentController@edit')->name('students.edit');
+    Route::get('/fetch' , 'StudentController@fetch')->name('students.fetch');
+    Route::post('/students/check' , 'StudentController@checkStar')->name('students.check');
 
     Route::get('/fullcalendar','FullCalendarController@index')->name('calendar');
-    Route::get('/load-events','EventController@loadEvents')->name('routeLoadEvents');
-    Route::put('/update-events','EventController@UpdateEvents')->name('routeUpdateEvents');
-    Route::post('/store-events','EventController@StoreEvents')->name('routeStoreEvents');
-    Route::delete('/delete-events','EventController@DeleteEvents')->name('routeDeleteEvents');
+    Route::get('/load-events','EventController@load')->name('routeLoadEvents');
+    Route::put('/update-events','EventController@update')->name('routeUpdateEvents');
+    Route::post('/store-events','EventController@store')->name('routeStoreEvents');
+    Route::delete('/delete-events','EventController@delete')->name('routeDeleteEvents');
 });
 
 Route::group(['middleware' => ['auth']], function () {
@@ -38,8 +38,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('a',function(Request $request)
-{
-    $request->session()->forget('must_change_pwd');
-});
+// Route::get('a',function(Request $request)
+// {
+//     $request->session()->forget('must_change_pwd');
+// });
 

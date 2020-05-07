@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Exception;
 
 class EventServices {
-    public static function SavedEvent($request, $event)
+    public static function saveEvent($request, $event)
     {
         DB::beginTransaction();
         try{
@@ -22,42 +22,42 @@ class EventServices {
         catch(Exception $e)
         {
             DB::rollBack();
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
-    public static function ShowEntiredEvent()
+    public static function showAllEvent()
     {
         try{
             return Events::all();
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }    
     }
-    public static function CreatedNewEvent($request)
+    public static function createNewEvent($request)
     {
         try{
             $event = new Events();
-            EventServices::SavedEvent($request,$event);
+            EventServices::saveEvent($request,$event);
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
-    public static function UpdatedEvent($request)
+    public static function updateEvent($request)
     {
         try{
             $event = Events::find($request->id);
-            EventServices::SavedEvent($request,$event);
+            EventServices::saveEvent($request,$event);
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
-    public static function DeletedEvent($request)
+    public static function deleteEvent($request)
     {
         DB::beginTransaction();
         try{
@@ -68,7 +68,7 @@ class EventServices {
         catch(Exception $e)
         {
             DB::rollBack();
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
 }

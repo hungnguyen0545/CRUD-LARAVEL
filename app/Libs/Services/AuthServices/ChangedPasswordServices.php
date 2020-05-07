@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
 class ChangedPasswordServices {
-    public static function StoredPasswordHasChanged($request)
+    public static function storePasswordHasChanged($request)
     {
         DB::beginTransaction();
         try{
@@ -24,10 +24,10 @@ class ChangedPasswordServices {
         catch(Exception $e)
         {
             DB::rollback();
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
-    public static function SavedPasswordHistoryAfterChanged()
+    public static function savePasswordHistoryAfterChanged()
     {
         DB::beginTransaction();
         try{
@@ -39,19 +39,19 @@ class ChangedPasswordServices {
         catch(Exception $e)
         {
             DB::rollback();
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
-    public static function CheckTime($uid)
+    public static function checkTime($uid)
     {
         try{
-            $TheLatestTimeChangePass = PasswordHistory::CheckTheLatestChangedPassword($uid);
-            $current = Carbon::now();//->addDays(8);
-            return $current->diffInDays($TheLatestTimeChangePass->created_at);
+            $TheLatestTimeChangedPass = PasswordHistory::checkTheLatestChangedPassword($uid);
+            $current = Carbon::now();//addDays(8);
+            return $current->diffInDays($TheLatestTimeChangedPass->created_at);
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
        
     }

@@ -9,7 +9,7 @@ class Majors extends Model
 {
     protected $table = "khoas";
 
-    public function Students()
+    public function students()
     {
         return $this->hasMany('App\Students','khoa_id');
     }

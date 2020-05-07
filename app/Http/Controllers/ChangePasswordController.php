@@ -27,8 +27,8 @@ class ChangePasswordController extends Controller
     public function store(ChangedPassword $request)
     {
         try{
-            ChangedPasswordServices::StoredPasswordHasChanged($request);
-            ChangedPasswordServices::SavedPasswordHistoryAfterChanged();
+            ChangedPasswordServices::storePasswordHasChanged($request);
+            ChangedPasswordServices::savePasswordHistoryAfterChanged();
             $request->session()->forget('must_change_pwd');
             Auth::logout();
             return redirect('/login');

@@ -17,12 +17,12 @@ class StudentController extends Controller
     public function index() 
     {
         try{
-            $students = StudentServices::ShowEntireStudent();
+            $students = StudentServices::showAllStudent();
             return view('student.student-list', compact('students'));
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
         
     }
@@ -37,13 +37,13 @@ class StudentController extends Controller
     {
         try{
             $query      = $request->get('search');
-            $students   = StudentServices::Fetch($query);
-            $countFetch = StudentServices::CountFetch(($query));
+            $students   = StudentServices::fetch($query);
+            $countFetch = StudentServices::countFetch(($query));
             return view('student.student-list', compact('students', 'query', 'countFetch'));
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
 
@@ -55,13 +55,13 @@ class StudentController extends Controller
     public function chart()
     {
         try{
-            $total = StudentServices::CountTotalStudent();
-            $items = StudentServices::ShowChart();
+            $total = StudentServices::countTotalStudent();
+            $items = StudentServices::showChart();
             return view('student.graph', compact('items', 'total'));
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }   
     }
 
@@ -77,12 +77,12 @@ class StudentController extends Controller
         try{
             $id = $request->id;
             $hasChecked = $request->hasChecked;
-            StudentServices::ChangedCheckedStatusOfStudent($id,$hasChecked);
+            StudentServices::changedCheckedStatusOfStudent($id,$hasChecked);
             return response()->json(array('mess' => 'success'));
         }
         catch(Exception $e)
         {
-            $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
 
@@ -105,12 +105,12 @@ class StudentController extends Controller
     public function store(StoreStudentInfo $request)
     {
         try{
-            StudentServices::CreateNewStudent($request);
+            StudentServices::createNewStudent($request);
             return redirect('/')->with('success', 'Đã thêm thành công !!!');
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
 
@@ -124,12 +124,12 @@ class StudentController extends Controller
     {
         try
         {
-            $student = StudentServices::ShowEachStudent($id);
+            $student = StudentServices::showEachStudent($id);
             return view('student.show', compact('student'));
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
 
@@ -142,12 +142,12 @@ class StudentController extends Controller
     public function edit($id)
     {
         try{
-            $student = StudentServices::ShowEachStudent($id);
+            $student = StudentServices::showEachStudent($id);
             return view('student.edit', compact('student'));
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
         
     }
@@ -162,12 +162,12 @@ class StudentController extends Controller
     public function update(StoreStudentInfo $request, $id)
     {
         try{
-            StudentServices::UpdatedStudent($request, $id);
+            StudentServices::updateStudent($request, $id);
             return redirect('/')->with('success', 'Đã cập nhật thành công!!!');
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
         
     }
@@ -180,12 +180,12 @@ class StudentController extends Controller
     public function destroy($id)
     {
         try{
-            StudentServices::DeletedStudent($id);
+            StudentServices::deleteStudent($id);
             return redirect('/')->with('success', 'Xoá thành công !');
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
 }

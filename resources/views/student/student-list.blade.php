@@ -14,7 +14,7 @@
 </div>
 @endif
 <div class="add-button-box">
-    <form class="form-inline my-2 my-lg-0 form-search" method="GET" action="{{ route('student.fetch') }}">
+    <form class="form-inline my-2 my-lg-0 form-search" method="GET" action="{{ route('students.fetch') }}">
         <input class="form-control mr-sm-2 search-input" type="search" placeholder="Search Name or MSSV ... " aria-label="Search" id='search' name='search'
         value= "{{ $query ?? '' }}" >
         <button class="btn btn-outline-success my-2 my-sm-0 btn-search" type="submit">Search</button>
@@ -25,7 +25,7 @@
         @endif
     </div>
     <a href="{{ route('students.create') }}" class="btn btn-success btn-large btn-add">Add More</a>
-    <a href="{{ route('chart') }}" class="btn btn-success btn-large btn-show-graph">Show Graph</a>
+    <a href="{{ route('students.chart') }}" class="btn btn-success btn-large btn-show-graph">Show Graph</a>
 </div>
 
 <div class="student-table">
@@ -48,10 +48,10 @@
                 <td scope="row"> {{ $student->khoas->tenkhoa }}</td>
                 <td scope="row"> {{ $student->nghenghiep }}</td>
                 <td class="btn-row">
-                    <a href="{{ route('show', $student->id) }}" class="btn btn-success btn-edit">
+                    <a href="{{ route('students.show', $student->id) }}" class="btn btn-success btn-edit">
                         <i class="fa fa-eye"></i>
                     </a>
-                    <a href="{{ route('edit', $student->id) }}" class="btn btn-primary btn-edit">
+                    <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary btn-edit">
                         <i class="fa fa-edit"></i>
                     </a>
                     <form action="{{ route('students.destroy', $student->id) }}" method="POST" style='display: contents;'>
@@ -76,7 +76,7 @@
 
         </tbody>
     </table>
-    <div class="pagination ">
+    <div class="pagination">
         {{ $students->appends(Request::except('page'))->links() }}
     </div>
 </div>

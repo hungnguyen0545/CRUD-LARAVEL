@@ -7,29 +7,29 @@ use Exception;
 
 class StudentServices
 {
-    public static function ShowEntireStudent()
+    public static function showAllStudent()
     {
         try{
-            return Students::ShowStudent()->paginate(5);    
+            return Students::showStudent()->paginate(5);    
         }
         catch(Exception $e)
         {
-            return $e->getMessage(); 
+            throw new Exception($e->getMessage()); 
         }
     }
-    public static function ShowEachStudent($id)
+    public static function showEachStudent($id)
     {
         try{
-            return Students::ShowStudent()
+            return Students::showStudent()
             ->whereRaw('sinhviens.id = ?', $id)
             ->first();
         }
         catch(Exception $e)
         {
-            return $e->getMessage(); 
+            throw new Exception($e->getMessage()); 
         }
     }
-    public static function SavedStudent($request,$student)
+    public static function save($request,$student)
     {
         DB::beginTransaction();
         try{
@@ -43,33 +43,33 @@ class StudentServices
         catch(Exception $e)
         {
             DB::rollBack();
-            return $e->getMessage(); 
+            throw new Exception($e->getMessage()); 
         }
     }
-    public static function CreateNewStudent($request)
+    public static function createNewStudent($request)
     {
         try{
             $student = new Students();
-            StudentServices::SavedStudent($request,$student);
+            StudentServices::save($request,$student);
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
-    public static function UpdatedStudent($request,$id)
+    public static function updateStudent($request,$id)
     {
         try{
             $student = Students::find($id);
-            StudentServices::SavedStudent($request,$student);
+            StudentServices::save($request,$student);
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
         
     }
-    public static function DeletedStudent($id)
+    public static function deleteStudent($id)
     {
         DB::beginTransaction();
         try{
@@ -80,49 +80,49 @@ class StudentServices
         catch(Exception $e)
         {
             DB::rollBack();
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
-    public static function Fetch($query)
+    public static function fetch($query)
     {
         try{
             if ($query != '') {
-                $students = Students::Fetch($query);
+                $students = Students::fetch($query);
             } else {
-                $students = Students::ShowStudent()->paginate(5);
+                $students = Students::showStudent()->paginate(5);
             }
             return $students;
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
-    public static function CountFetch($query)
+    public static function countFetch($query)
     {
         try{
-            return Students::CountFetch($query);
+            return Students::countFetch($query);
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
-    public static function CountTotalStudent()
+    public static function countTotalStudent()
     {
         try{
             return Students::count();
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
-    public static function ShowChart()
+    public static function showChart()
     {
         try{
             $items = array();
-            $array = Students::ShowChart();
+            $array = Students::showChart();
             foreach ($array as $key => $value) 
             {
                 array_push($items, $value->slsv);
@@ -131,11 +131,11 @@ class StudentServices
         }
         catch(Exception $e)
         {
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
        
     }
-    public static function ChangedCheckedStatusOfStudent($id,$hasChecked)
+    public static function changedCheckedStatusOfStudent($id,$hasChecked)
     {
         DB::beginTransaction();
         try{
@@ -155,7 +155,7 @@ class StudentServices
         catch(Exception $e)
         {
             DB::rollBack();
-            return $e->getMessage();
+            throw new Exception($e->getMessage()); 
         }
     }
 }
