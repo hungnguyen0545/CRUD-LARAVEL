@@ -4,6 +4,7 @@ namespace App\Libs\Services;
 
 use App\Events;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Exception;
 
 class EventServices {
@@ -11,6 +12,7 @@ class EventServices {
     {
         DB::beginTransaction();
         try{
+            $event->user_id = Auth::id();
             $event->title = $request->title;
             $event->start = $request->start;
             $event->end   = $request->end;
@@ -28,8 +30,10 @@ class EventServices {
     public static function showAllEvent()
     {
         try{
-            return Events::all();
-        }
+            return Events::select('id','title','start','end','color','description')
+                        ->where('user_id',Auth::id())        
+                        ->get();
+            }
         catch(Exception $e)
         {
             throw new Exception($e->getMessage()); 

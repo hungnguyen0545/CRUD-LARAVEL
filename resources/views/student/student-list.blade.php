@@ -2,7 +2,6 @@
 
 @push('styles')
 <link href="{{ asset('/css/student-list.css') }}" rel="stylesheet" type="text/css">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 @endpush
 
 @section('title', 'Student Management')
@@ -48,7 +47,7 @@
                 <td scope="row"> {{ $student->khoas->tenkhoa }}</td>
                 <td scope="row"> {{ $student->nghenghiep }}</td>
                 <td class="btn-row">
-                    <a href="{{ route('students.show', $student->id) }}" class="btn btn-success btn-edit">
+                    <a href="{{ route('students.show', $student->id) }}" class="btn btn-success btn-show">
                         <i class="fa fa-eye"></i>
                     </a>
                     <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary btn-edit">

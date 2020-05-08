@@ -8,4 +8,12 @@ $(document).ready(function() {
             return false;
         }
     })
+
+    $('.btn-complete').on('click', function() {
+        if (confirm('Bạn có chắc chắn đã hoàn thành công việc này ?')) {
+            return true;
+        } else {
+            return false;
+        }
+    })
 })

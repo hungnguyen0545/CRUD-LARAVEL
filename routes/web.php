@@ -29,6 +29,13 @@ Route::group(['middleware' => ['auth', 'changepwd']], function () {
     Route::put('/update-events','EventController@update')->name('routeUpdateEvents');
     Route::post('/store-events','EventController@store')->name('routeStoreEvents');
     Route::delete('/delete-events','EventController@delete')->name('routeDeleteEvents');
+
+    Route::get('/todolist','ToDoListController@index')->name('todolists.load');
+    Route::post('/store-todolist','ToDoListController@store')->name('todolists.store');
+    Route::put('/complete-todoList/{itemId}', 'ToDoListController@complete')->name('todolists.complete');
+    Route::put('/update-todolist/{itemId}','ToDoListController@update')->name('todolists.update');
+    Route::delete('/delete-todolist/{itemId}','ToDoListController@delete')->name('todolists.delete');
+    
 });
 
 Route::group(['middleware' => ['auth']], function () {
